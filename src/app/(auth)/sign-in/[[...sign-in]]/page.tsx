@@ -23,7 +23,7 @@ export default function Page() {
         </div>
       </div>
       <div className="h-full bg-primary hidden lg:flex items-center justify-center">
-
+         <img src="/finuva.png" height={130} width={130} alt="logo"/>
       </div>
     </div>
   )

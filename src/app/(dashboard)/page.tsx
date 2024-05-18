@@ -1,8 +1,10 @@
+import { useGetAccounts } from "@/features/accounts/api/use-get-accounts"
 
 const HomeDashboardPage = () => {
+
   return (
     <div>
-      hello
+       
     </div>
   )
 }

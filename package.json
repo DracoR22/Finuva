@@ -8,8 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "db:studio": "pnpm exec drizzle-kit studio",
-    "db:generate": "pnpm exec drizzle-kit push:pg",
-    "db:migrate": ""
+    "db:generate": "pnpm exec drizzle-kit generate",
+    "db:migrate": "pnpm exec drizzle-kit migrate"
   },
   "dependencies": {
     "@clerk/backend": "^1.1.5",

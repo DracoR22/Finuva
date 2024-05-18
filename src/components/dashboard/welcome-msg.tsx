@@ -11,7 +11,7 @@ const WelcomeMsg = () => {
       <h2 className="text-2xl lg:text-4xl text-white font-medium">
         Welcome back {isLoaded ? ', ' : ' '}{user?.firstName} 🚀
       </h2>
-      <p className="text-sm lg:text-base text-muted-foreground">
+      <p className="text-sm lg:text-base text-accent dark:text-muted-foreground">
         This is your Financial Overview Report
       </p>
     </div>

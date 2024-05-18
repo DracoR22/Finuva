@@ -3,7 +3,8 @@ import { NextResponse } from "next/server";
 
 // These are the protected routes in Clerk's new version
 const isProtectedRoute = createRouteMatcher([
-  '/'
+  '/',
+  // '/api(.*)'
 ])
 
 export default clerkMiddleware((auth, request) => {

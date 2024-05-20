@@ -50,7 +50,7 @@ const AccountForm = ({ onSubmit, defaultValues, disabled, id, onDelete }: Props)
              </FormItem>
            )}/>
            <Button className="w-full" disabled={disabled}>
-             {disabled ? <Loader2Icon className="w-4 h-4 animate-spin"/> : (id ? 'Save changes' : 'Create account')}
+              {id ? 'Save changes' : 'Create account'}
            </Button>
            {!!id && (
             <Button type="button" disabled={disabled} onClick={handleDelete} className="w-full" variant={'outline'}>

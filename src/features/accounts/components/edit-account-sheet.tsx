@@ -7,6 +7,8 @@ import { useOpenAccount } from "../hooks/use-open-account"
 import { useGetAccount } from "../api/use-get-account"
 import { Loader2Icon } from "lucide-react"
 import { useEditAccount } from "../api/use-edit-account"
+import { useDeleteAccount } from "../api/use-delete-account"
+import { useConfirm } from "@/hooks/use-confirm"
 
 const formSchema = insertAccountSchema.pick({
   name: true
@@ -26,8 +28,11 @@ const EditAccountSheet = () => {
 
     const { isOpen, onClose, id } = useOpenAccount()
 
+    const [ConfirmDialog, confirm] = useConfirm('Are you sure?', 'You are about to delete this transaction')
+
     const { data, isLoading } = useGetAccount(id)
     const { mutate, isPending } = useEditAccount(id)
+    const deleteMutation = useDeleteAccount(id)
 
     const onSubmit = (values: FormValues) => {
        mutate(values, {
@@ -37,6 +42,18 @@ const EditAccountSheet = () => {
        })
     }
 
+    const onDelete = async () => {
+      const ok = await confirm()
+
+      if (ok) {
+        deleteMutation.mutate(undefined, {
+          onSuccess: () => {
+            onClose()
+          }
+        })
+      }
+    }
+
     const defaultValues = data ? {
         name: data.name,
     } : {
@@ -44,6 +61,8 @@ const EditAccountSheet = () => {
     }
 
   return (
+    <>
+    <ConfirmDialog/>
     <Sheet open={isOpen} onOpenChange={onClose}>
        <SheetContent className="space-y-4">
            <SheetHeader>
@@ -59,10 +78,11 @@ const EditAccountSheet = () => {
                <Loader2Icon className="size-4 text-muted-foreground animate-spin"/>
             </div>
            ) : (
-            <AccountForm id={id} onSubmit={onSubmit} disabled={isPending} defaultValues={defaultValues}/>
+            <AccountForm id={id} onSubmit={onSubmit} disabled={isPending || deleteMutation.isPending } defaultValues={defaultValues} onDelete={onDelete}/>
            )}
        </SheetContent>
     </Sheet>
+    </>
   )
 }
 

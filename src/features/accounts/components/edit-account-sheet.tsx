@@ -28,7 +28,7 @@ const EditAccountSheet = () => {
 
     const { isOpen, onClose, id } = useOpenAccount()
 
-    const [ConfirmDialog, confirm] = useConfirm('Are you sure?', 'You are about to delete this transaction')
+    const [ConfirmDialog, confirm] = useConfirm('Are you sure?', 'You are about to delete this account')
 
     const { data, isLoading } = useGetAccount(id)
     const { mutate, isPending } = useEditAccount(id)

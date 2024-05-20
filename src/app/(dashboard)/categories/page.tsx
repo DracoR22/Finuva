@@ -1,21 +1,21 @@
 'use client'
 
-import { columns } from "@/components/accounts/columns"
+import { columns } from "@/components/categories/columns"
 import { DataTable } from "@/components/global/data-table"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
-import { useBulkDeleteAccounts } from "@/features/accounts/api/use-bulk-delete"
-import { useGetAccounts } from "@/features/accounts/api/use-get-accounts"
-import { useNewAccount } from "@/features/accounts/hooks/use-new-account"
+import { useBulkDeleteCategories } from "@/features/categories/api/use-bulk-delete"
+import { useGetCategories } from "@/features/categories/api/use-get-categories"
+import { useNewCategory } from "@/features/categories/hooks/use-new-category"
 import { Loader2, PlusIcon } from "lucide-react"
 
-const AccountsPage = () => {
+const CategoriesPage = () => {
 
-    const { onOpen } = useNewAccount()
+    const { onOpen } = useNewCategory()
 
-    const { data, isLoading } = useGetAccounts()
-    const { mutate, isPending } = useBulkDeleteAccounts()
+    const { data, isLoading } = useGetCategories()
+    const { mutate, isPending } = useBulkDeleteCategories()
 
     const disabled = isLoading || isPending
 
@@ -41,7 +41,7 @@ const AccountsPage = () => {
         <Card className="border-none drop-shadow-sm">
             <CardHeader className="gap-y-2 lg:flex-row lg:items-center lg:justify-between">
                 <CardTitle className="text-xl line-clamp-1">
-                   Accounts page
+                   Categories page
                 </CardTitle>
                 <Button onClick={onOpen}>
                    <PlusIcon className="size-4 mr-2"/>
@@ -60,4 +60,4 @@ const AccountsPage = () => {
   )
 }
 
-export default AccountsPage
+export default CategoriesPage

@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Loader2Icon, TrashIcon } from "lucide-react"
 import Select from "@/components/global/select"
+import DatePicker from "@/components/global/date-picker"
 
 const formSchema = z.object({
     date: z.coerce.date(),
@@ -70,6 +71,13 @@ const TransactionForm = ({ onSubmit, defaultValues, disabled, id, onDelete, acco
                 <FormControl>
                   <Select placeholder="Select category" options={categoryOptions} onCreate={onCreateCategory}
                    value={field.value} onChange={field.onChange} disabled={disabled}/>
+                </FormControl>
+             </FormItem>
+           )}/>
+           <FormField name="date" control={form.control} render={({ field }) => (
+             <FormItem>
+                <FormControl>
+                  <DatePicker value={field.value} onChange={field.onChange} disabled={disabled}/>
                 </FormControl>
              </FormItem>
            )}/>

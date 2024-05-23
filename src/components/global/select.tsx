@@ -24,15 +24,31 @@ const Select = ({ onChange, disabled, onCreate, options = [], placeholder, value
     }, [options, value])
 
   return (
-    <CreateableSelect placeholder={placeholder} className="text-sm h-10" 
+    <CreateableSelect placeholder={placeholder} className="text-sm h-10"
     styles={{
         control: (base) => ({
             ...base,
-            borderColor: "#e2e8f0",
+            borderColor: "#3F3F3F",
+            backgroundColor: '#00000',
             ":hover": {
-                borderColor: "#e2e8f0"
-            }
-        })
+                borderColor: "#6B4483"
+            },
+        }),
+     menu: (m) => ({
+        ...m,
+        backgroundColor: '#1A1A17',
+     }),
+     option: (m) => ({
+        ...m,
+        color: "white",
+        backgroundColor: '#1A1A17',
+        ":active": {
+            backgroundColor: "#6B4483"
+        },
+        ":hover": {
+            backgroundColor: "#6B4483"
+        },
+     }),
     }} value={formattedValue} onChange={onSelect} options={options} onCreateOption={onCreate} isDisabled={disabled}/>
   )
 }

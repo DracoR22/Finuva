@@ -21,6 +21,7 @@ export const useEditCategory = (id?: string) => {
             // Refetch all accounts using its key
             queryClient.invalidateQueries({ queryKey: ['category', { id }] })
             queryClient.invalidateQueries({ queryKey: ['categories'] })
+            queryClient.invalidateQueries({ queryKey: ['transactions'] })
         },
 
         onError: () => {

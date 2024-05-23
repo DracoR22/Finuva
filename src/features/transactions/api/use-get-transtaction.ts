@@ -1,4 +1,5 @@
 import { client } from '@/lib/hono'
+import { convertAmountfromMiliunits } from '@/lib/utils'
 import { useQuery } from '@tanstack/react-query'
 
 export const useGetTransaction = (id?: string) => {
@@ -15,7 +16,15 @@ export const useGetTransaction = (id?: string) => {
 
             const { data } = await response.json()
 
-            return data
+            return {
+                id: data.id,
+                date: data.date,
+                categoryId: data.categoryId,
+                payee: data.payee,
+                amount: convertAmountfromMiliunits(data.amount),
+                notes: data.notes,
+                accountId: data.accountId,
+            }
         }
     })
 

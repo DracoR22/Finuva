@@ -10,14 +10,15 @@ import Select from "@/components/global/select"
 import DatePicker from "@/components/global/date-picker"
 import { Textarea } from "@/components/ui/textarea"
 import AmountInput from "@/components/global/amount-input"
+import { convertAmountToMiliunits } from "@/lib/utils"
 
 const formSchema = z.object({
     date: z.coerce.date(),
     accountId: z.string(),
     categoryId: z.string().nullable().optional(),
     payee: z.string(),
-    notes: z.string(),
-    amount: z.string().nullable().optional()
+    notes: z.string().optional().nullable(),
+    amount: z.string()
 })
 
 const apiSchema = insertTransactionSchema.omit({ id: true })
@@ -45,7 +46,12 @@ const TransactionForm = ({ onSubmit, defaultValues, disabled, id, onDelete, acco
     })
 
     const handleSubmit = (values: FormValues) => {
-    //   onSubmit(values)
+      const amount = parseFloat(values.amount)
+      const amountInMiliunits = convertAmountToMiliunits(amount)
+      onSubmit({
+        ...values,
+        amount: amountInMiliunits
+      })
     }
 
     const handleDelete = () => {
@@ -115,12 +121,12 @@ const TransactionForm = ({ onSubmit, defaultValues, disabled, id, onDelete, acco
              </FormItem>
            )}/>
            <Button className="w-full" disabled={disabled}>
-              {id ? 'Save changes' : 'Create account'}
+              {id ? 'Save changes' : 'Create transaction'}
            </Button>
            {!!id && (
             <Button type="button" disabled={disabled} onClick={handleDelete} className="w-full" variant={'outline'}>
               <TrashIcon className="size-4 mr-2"/>
-               Delete account
+               Delete transaction
             </Button>
            )}
         </form>

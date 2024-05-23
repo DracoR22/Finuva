@@ -21,6 +21,7 @@ export const useEditAccount = (id?: string) => {
             // Refetch all accounts using its key
             queryClient.invalidateQueries({ queryKey: ['account', { id }] })
             queryClient.invalidateQueries({ queryKey: ['accounts'] })
+            queryClient.invalidateQueries({ queryKey: ['transactions'] })
         },
 
         onError: () => {

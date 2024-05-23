@@ -1,11 +1,10 @@
 'use client'
 
-import { columns } from "@/components/accounts/columns"
 import { DataTable } from "@/components/global/data-table"
+import { columns } from "@/components/transactions/columns"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
-import { useGetAccounts } from "@/features/accounts/api/use-get-accounts"
 import { useBulkDeleteTransactions } from "@/features/transactions/api/use-bulk-delete-transaction"
 import { useGetTransactions } from "@/features/transactions/api/use-get-transactions"
 import { useNewTransaction } from "@/features/transactions/hooks/use-new-transaction"
@@ -15,7 +14,7 @@ const TransactionsPage = () => {
 
     const { onOpen } = useNewTransaction()
 
-    const { data, isLoading } = useGetAccounts()
+    const { data, isLoading } = useGetTransactions()
     const { mutate, isPending } = useBulkDeleteTransactions()
 
     const disabled = isLoading || isPending
@@ -50,7 +49,7 @@ const TransactionsPage = () => {
                 </Button>
             </CardHeader>
             <CardContent>
-              <DataTable filterKey="name" disabled={disabled} columns={columns} data={data || []} 
+              <DataTable filterKey="payee" disabled={disabled} columns={columns} data={data || []} 
               onDelete={(row) => {
                 const ids = row.map((r) => r.original.id)
                 mutate({ ids })

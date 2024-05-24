@@ -2,6 +2,8 @@
 
 import { DataTable } from "@/components/global/data-table"
 import { columns } from "@/components/transactions/columns"
+import ImportCard from "@/components/transactions/import-card"
+import UploadButton from "@/components/transactions/upload-button"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
@@ -9,8 +11,32 @@ import { useBulkDeleteTransactions } from "@/features/transactions/api/use-bulk-
 import { useGetTransactions } from "@/features/transactions/api/use-get-transactions"
 import { useNewTransaction } from "@/features/transactions/hooks/use-new-transaction"
 import { Loader2, PlusIcon } from "lucide-react"
+import { useState } from "react"
+
+enum VARIANTS {
+  LIST = 'LIST',
+  IMPORT = 'IMPORT'
+}
+
+const INITAL_IMPORT_RESULTS = {
+  data: [],
+  errors: [],
+  meta: {}
+}
 
 const TransactionsPage = () => {
+    const [variant, setVariant] = useState<VARIANTS>(VARIANTS.LIST)
+    const [importResults, setImportResults] = useState(INITAL_IMPORT_RESULTS)
+
+    const onUpload = (results: typeof INITAL_IMPORT_RESULTS) => {
+       setImportResults(results)
+       setVariant(VARIANTS.IMPORT)
+    }
+
+    const onCancelImport = () => {
+      setImportResults(INITAL_IMPORT_RESULTS)
+      setVariant(VARIANTS.LIST)
+    }
 
     const { onOpen } = useNewTransaction()
 
@@ -36,6 +62,14 @@ const TransactionsPage = () => {
       )
     }
 
+    if (variant === VARIANTS.IMPORT) {
+      return (
+        <>
+          <ImportCard data={importResults.data} onCancel={onCancelImport} onSubmit={() => {}}/>
+        </>
+      )
+    }
+
   return (
     <div className="max-w-screen-2xl mx-auto w-full pb-10 -mt-24">
         <Card className="border-none drop-shadow-sm">
@@ -43,10 +77,13 @@ const TransactionsPage = () => {
                 <CardTitle className="text-xl line-clamp-1">
                    Transactions History
                 </CardTitle>
-                <Button onClick={onOpen}>
+               <div className="flex items-center gap-x-2">
+               <Button onClick={onOpen}>
                    <PlusIcon className="size-4 mr-2"/>
                    Add new
                 </Button>
+                <UploadButton onUpload={onUpload}/>
+               </div>
             </CardHeader>
             <CardContent>
               <DataTable filterKey="payee" disabled={disabled} columns={columns} data={data || []} 

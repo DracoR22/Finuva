@@ -17,13 +17,8 @@ export const useGetTransaction = (id?: string) => {
             const { data } = await response.json()
 
             return {
-                id: data.id,
-                date: data.date,
-                categoryId: data.categoryId,
-                payee: data.payee,
+                ...data,
                 amount: convertAmountfromMiliunits(data.amount),
-                notes: data.notes,
-                accountId: data.accountId,
             }
         }
     })

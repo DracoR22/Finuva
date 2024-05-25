@@ -43,7 +43,7 @@ const app = new Hono()
    }
 
    const [currentPeriod] = await fetchFinancialData(auth.userId, startDate, endDate)
-   const [lastPeriod] = await fetchFinancialData(auth.userId, startDate, endDate)
+   const [lastPeriod] = await fetchFinancialData(auth.userId, lastPeriodStart, lastPeriodEnd)
 
    const incomeChange = calculatePercentageChange(currentPeriod.income, lastPeriod.income)
    const expensesChange = calculatePercentageChange(currentPeriod.expenses, lastPeriod.expenses)
@@ -97,7 +97,18 @@ const app = new Hono()
 
    const days = fillMissingDays(activeDays, startDate, endDate);
 
-   return c.json({ currentPeriod, lastPeriod, incomeChange, expensesChange, remainingChange, finalCategories })
+   return c.json({
+      data: {
+        remainingAmount: currentPeriod.remaining,
+        remainingChange,
+        incomeAmount: currentPeriod.income,
+        incomeChange,
+        expensesAmount: currentPeriod.expenses,
+        expensesChange,
+        categories: finalCategories,
+        days,
+      },
+    });
 })
 
 export default app

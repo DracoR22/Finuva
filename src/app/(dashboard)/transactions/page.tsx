@@ -12,6 +12,10 @@ import { useGetTransactions } from "@/features/transactions/api/use-get-transact
 import { useNewTransaction } from "@/features/transactions/hooks/use-new-transaction"
 import { Loader2, PlusIcon } from "lucide-react"
 import { useState } from "react"
+import { transactions as transactionSchema } from "@/db/schema"
+import { useSelectAccount } from "@/features/accounts/hooks/use-select-account"
+import { toast } from "sonner"
+import { useBulkCreateTransactions } from "@/features/transactions/api/use-bulk-create-transactions"
 
 enum VARIANTS {
   LIST = 'LIST',
@@ -38,12 +42,35 @@ const TransactionsPage = () => {
       setVariant(VARIANTS.LIST)
     }
 
+    const createTransactions = useBulkCreateTransactions()
+
     const { onOpen } = useNewTransaction()
 
     const { data, isLoading } = useGetTransactions()
     const { mutate, isPending } = useBulkDeleteTransactions()
 
+    const [AccountDialog, confirm] = useSelectAccount()
+
     const disabled = isLoading || isPending
+
+    const onSubmitImport = async (values: typeof transactionSchema.$inferInsert[]) => {
+       const accountId = await confirm()
+
+       if (!accountId) {
+        return toast.error('Please select an account to continue.')
+       }
+
+       const data = values.map((value) => ({
+        ...value,
+        accountId: accountId as string
+       }))
+
+       createTransactions.mutate(data, {
+         onSuccess: () => {
+          onCancelImport()
+         }
+       })
+    }
 
     if (isLoading) {
       return (
@@ -65,7 +92,8 @@ const TransactionsPage = () => {
     if (variant === VARIANTS.IMPORT) {
       return (
         <>
-          <ImportCard data={importResults.data} onCancel={onCancelImport} onSubmit={() => {}}/>
+          <AccountDialog/>
+          <ImportCard data={importResults.data} onCancel={onCancelImport} onSubmit={onSubmitImport}/>
         </>
       )
     }

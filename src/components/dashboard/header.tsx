@@ -5,6 +5,7 @@ import { ModeToggle } from "../global/theme-toggle"
 import { Button } from "../ui/button"
 import { Loader2Icon } from "lucide-react"
 import WelcomeMsg from "./welcome-msg"
+import { Filters } from "./filters"
 
 const Header = () => {
   return (
@@ -28,6 +29,7 @@ const Header = () => {
               </div>
            </div>
            <WelcomeMsg/>
+           <Filters/>
        </div>
     </header>
   )

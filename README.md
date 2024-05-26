@@ -1,6 +1,6 @@
 <a href="https://andromeda-pearl.vercel.app">
   <img src="/public/banner.png">
-  <h1 align="center">Finuva</h1>
+  <h1 align="center">Finuva 🦄</h1>
 </a>
 
 <p align="center">
@@ -20,6 +20,7 @@
 - 💼 DrizzleORM: Simplify database operations and interactions within the application.
 - 🔥 Hono: Ultrafast & Lightweight web framework
 - 🔑 Authentication using Clerk
+- 🌓 Light and Dark Mode: Customize your viewing experience with light and dark themes.
 
 ### Upload your transactions or manage them manually
 <img src="/public/banner2.png">

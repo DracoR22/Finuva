@@ -13,6 +13,7 @@ const DataGrid = () => {
 
     const params = useSearchParams()
 
+    // SEE IF THERE ARE DATE FILTERS IN URL PARAMS
     const to = params.get('to') || undefined
     const from = params.get('from') || undefined
 

@@ -1,4 +1,4 @@
-<a href="https://andromeda-pearl.vercel.app">
+<a href="https://finuva.vercel.app">
   <img src="/public/banner.png">
   <h1 align="center">Finuva 🦄</h1>
 </a>
@@ -40,6 +40,22 @@ git clone https://github.com/DracoR22/Finuva
 
 ```shell
 pnpm install
+```
+
+### Setup .env file
+
+```js
+NEXT_PUBLIC_CLERK_SIGN_IN_URL=
+NEXT_PUBLIC_CLERK_SIGN_UP_URL=
+
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
+CLERK_SECRET_KEY=
+
+CLERK_PUBLISHABLE_KEY=
+
+DATABASE_URL=
+
+NEXT_PUBLIC_APP_URL=
 ```
 
 ### Start the app
